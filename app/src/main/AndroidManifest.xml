@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 注意：原来的 package="com.example.myproject" 属性已删除 ——
+     Android Gradle Plugin 8 起不再允许在 Manifest 里写 package，
+     包名统一由 app/build.gradle.kts 里的 namespace 声明。 -->
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- 只保留真正需要的权限：课表是走教务系统 HTTPS 接口拉取、或用 SAF(OpenDocument)
+         选择文件后经 contentResolver 读取的，不需要任何存储权限。
+         原先的 READ_EXTERNAL_STORAGE（Android 13+ 已失效）和
+         READ_MEDIA_DOCUMENTS（Android 里并不存在这个权限名）已删除。 -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <!-- 设置里的「添加小部件」用的是 requestPinAppWidget（Android 8.0+），
+         系统需要这个权限才允许 App 主动把组件放到桌面。 -->
+    <uses-permission android:name="android.permission.REQUEST_PIN_APPWIDGET" />
+    <!-- 第 44 批新增「上课提醒」用到的权限：
+         POST_NOTIFICATIONS     Android 13+ 发通知需要用户同意
+         RECEIVE_BOOT_COMPLETED 开机后把提醒闹钟重排一遍（闹钟不跨重启保留）
+         SCHEDULE_EXACT_ALARM / USE_EXACT_ALARM 让提醒准点；
+         系统不给精确闹钟权限时，代码会自动退回普通闹钟，不会崩。 -->
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
+    <uses-permission android:name="android.permission.USE_EXACT_ALARM" />
+    <uses-permission android:name="android.permission.USE_FULL_SCREEN_INTENT" />
+    <!-- 第 45 批：上课静音（改铃声模式）与勿打扰访问权限 -->
+    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
+    <uses-permission android:name="android.permission.ACCESS_NOTIFICATION_POLICY" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/tut"
+        android:label="芝士院特供课表"
+        android:roundIcon="@drawable/tut"
+        android:supportsRtl="true"
+        android:usesCleartextTraffic="true"
+        android:theme="@style/Theme.App">
+
+        <activity
+            android:name=".MainActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <!-- 桌面小组件：四种尺寸共用同一份数据。
+             exported="false" 是官方推荐写法：系统的 AppWidgetService 属于系统调用方，
+             照样能把 APPWIDGET_UPDATE 投递进来，但其它 App 无法乱触发。 -->
+        <receiver
+            android:name=".ScheduleWidgetProvider"
+            android:exported="false"
+            android:label="芝士院课表 · 今天 4×2">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/schedule_widget_info" />
+        </receiver>
+
+        <!-- 2×2：今天前 3 门 -->
+        <receiver
+            android:name=".ScheduleWidgetMediumProvider"
+            android:exported="false"
+            android:label="芝士院课表 · 今天 2×2">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/schedule_widget_info_medium" />
+        </receiver>
+
+        <!-- 2×1：第几周 + 今天第一门 -->
+        <receiver
+            android:name=".ScheduleWidgetShortProvider"
+            android:exported="false"
+            android:label="芝士院课表 · 下一节 2×1">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/schedule_widget_info_short" />
+        </receiver>
+
+        <!-- 1×1：最近一节课 -->
+        <receiver
+            android:name=".ScheduleWidgetTinyProvider"
+            android:exported="false"
+            android:label="芝士院课表 · 下一节 1×1">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/schedule_widget_info_tiny" />
+        </receiver>
+
+        <!-- 第 44 批新增：上课提醒。
+             到点由 AlarmManager 发一个显式广播进来 → 弹系统通知 + 排下一节。
+             exported="false"：只有本 App 自己的 PendingIntent 能触达。 -->
+        <receiver
+            android:name=".ClassReminderReceiver"
+            android:exported="false"
+            android:label="上课提醒" />
+
+        <!-- 第 44 批新增：开机后把上课提醒的闹钟重排一遍（闹钟不跨重启保留） -->
+        <receiver
+            android:name=".BootReceiver"
+            android:exported="true"
+            android:enabled="true"
+            android:label="开机重排上课提醒">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.LOCKED_BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
+
+    </application>
+
+</manifest>
