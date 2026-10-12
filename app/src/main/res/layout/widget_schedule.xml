@@ -1,0 +1,97 @@
+<?xml version='1.0' encoding='utf-8'?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent" android:layout_height="match_parent">
+    <!-- 小部件背景图：设置里选过才显示（id 四个布局统一，代码里同一个写法） -->
+    <ImageView android:id="@+id/widget_card" android:layout_width="match_parent" android:layout_height="match_parent" android:scaleType="fitXY" android:src="@drawable/widget_bg" />
+    <ImageView android:id="@+id/widget_bg_image" android:layout_width="match_parent" android:layout_height="match_parent" android:scaleType="fitXY" android:visibility="gone" />
+    <LinearLayout android:id="@+id/widget_root" android:layout_width="match_parent" android:layout_height="match_parent" android:orientation="vertical" android:paddingLeft="10dp" android:paddingTop="10dp" android:paddingRight="10dp" android:paddingBottom="10dp">
+        <!-- 顶部：第几周（左） + 今天周几和日期（右） -->
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:gravity="center_vertical" android:orientation="horizontal">
+            <TextView android:id="@+id/widget_title" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:ellipsize="end" android:singleLine="true" android:text="第 1 周" android:textColor="#FF303F9F" android:textSize="13sp" android:textStyle="bold" />
+            <TextView android:id="@+id/widget_date" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="周一 3/9" android:textColor="#99000000" android:textSize="12sp" />
+        </LinearLayout>
+        <!-- 没课时显示这行 -->
+        <TextView android:id="@+id/widget_empty" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="8dp" android:text="今天没课 🎉" android:textColor="#99000000" android:textSize="13sp" android:visibility="gone" />
+        <!-- ↓↓↓ 6 行课程，按需显示/隐藏 ↓↓↓ -->
+        <FrameLayout android:id="@+id/widget_row_1" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="4dp">
+            <ImageView android:id="@+id/widget_cell_1" android:layout_width="match_parent" android:layout_height="match_parent" android:scaleType="fitXY" />
+            <LinearLayout android:layout_width="match_parent" android:layout_height="match_parent" android:gravity="center_vertical" android:orientation="horizontal" android:paddingLeft="6dp" android:paddingTop="3dp" android:paddingRight="6dp" android:paddingBottom="3dp" android:id="@+id/widget_rowin_1">
+                <!-- 左边：上课时间（上一行起始、下一行结束，两行） -->
+                <TextView android:id="@+id/widget_time_1" android:layout_width="wrap_content" android:layout_height="wrap_content" android:minWidth="34dp" android:maxLines="2" android:text="8:00\n8:40" android:textColor="#FF5F6368" android:textSize="11sp" />
+                <!-- 蓝色竖线：左边时间、右边课程，就靠它分开 -->
+                <TextView android:id="@+id/widget_line_1" android:maxLines="1" android:layout_width="2dp" android:layout_height="match_parent" android:minHeight="28dp" android:layout_marginLeft="8dp" android:layout_marginRight="8dp" android:background="#FF4A6CF7" />
+                <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:orientation="vertical">
+                    <TextView android:id="@+id/widget_text_1" android:layout_width="match_parent" android:layout_height="wrap_content" android:ellipsize="end" android:singleLine="true" android:text="高等数学" android:textColor="#FF1F1F1F" android:textSize="13sp" android:textStyle="bold" />
+                    <TextView android:id="@+id/widget_info_1" android:layout_width="match_parent" android:layout_height="wrap_content" android:ellipsize="end" android:singleLine="true" android:text="第1-2节｜4教204｜张老师" android:textColor="#FF7A7A7A" android:textSize="10sp" />
+                </LinearLayout>
+            </LinearLayout>
+        </FrameLayout>
+        <FrameLayout android:id="@+id/widget_row_2" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="4dp">
+            <ImageView android:id="@+id/widget_cell_2" android:layout_width="match_parent" android:layout_height="match_parent" android:scaleType="fitXY" />
+            <LinearLayout android:layout_width="match_parent" android:layout_height="match_parent" android:gravity="center_vertical" android:orientation="horizontal" android:paddingLeft="6dp" android:paddingTop="3dp" android:paddingRight="6dp" android:paddingBottom="3dp" android:id="@+id/widget_rowin_2">
+                <!-- 左边：上课时间（上一行起始、下一行结束，两行） -->
+                <TextView android:id="@+id/widget_time_2" android:layout_width="wrap_content" android:layout_height="wrap_content" android:minWidth="34dp" android:maxLines="2" android:text="8:00\n8:40" android:textColor="#FF5F6368" android:textSize="11sp" />
+                <!-- 蓝色竖线：左边时间、右边课程，就靠它分开 -->
+                <TextView android:id="@+id/widget_line_2" android:maxLines="1" android:layout_width="2dp" android:layout_height="match_parent" android:minHeight="28dp" android:layout_marginLeft="8dp" android:layout_marginRight="8dp" android:background="#FF4A6CF7" />
+                <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:orientation="vertical">
+                    <TextView android:id="@+id/widget_text_2" android:layout_width="match_parent" android:layout_height="wrap_content" android:ellipsize="end" android:singleLine="true" android:text="高等数学" android:textColor="#FF1F1F1F" android:textSize="13sp" android:textStyle="bold" />
+                    <TextView android:id="@+id/widget_info_2" android:layout_width="match_parent" android:layout_height="wrap_content" android:ellipsize="end" android:singleLine="true" android:text="第1-2节｜4教204｜张老师" android:textColor="#FF7A7A7A" android:textSize="10sp" />
+                </LinearLayout>
+            </LinearLayout>
+        </FrameLayout>
+        <FrameLayout android:id="@+id/widget_row_3" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="4dp">
+            <ImageView android:id="@+id/widget_cell_3" android:layout_width="match_parent" android:layout_height="match_parent" android:scaleType="fitXY" />
+            <LinearLayout android:layout_width="match_parent" android:layout_height="match_parent" android:gravity="center_vertical" android:orientation="horizontal" android:paddingLeft="6dp" android:paddingTop="3dp" android:paddingRight="6dp" android:paddingBottom="3dp" android:id="@+id/widget_rowin_3">
+                <!-- 左边：上课时间（上一行起始、下一行结束，两行） -->
+                <TextView android:id="@+id/widget_time_3" android:layout_width="wrap_content" android:layout_height="wrap_content" android:minWidth="34dp" android:maxLines="2" android:text="8:00\n8:40" android:textColor="#FF5F6368" android:textSize="11sp" />
+                <!-- 蓝色竖线：左边时间、右边课程，就靠它分开 -->
+                <TextView android:id="@+id/widget_line_3" android:maxLines="1" android:layout_width="2dp" android:layout_height="match_parent" android:minHeight="28dp" android:layout_marginLeft="8dp" android:layout_marginRight="8dp" android:background="#FF4A6CF7" />
+                <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:orientation="vertical">
+                    <TextView android:id="@+id/widget_text_3" android:layout_width="match_parent" android:layout_height="wrap_content" android:ellipsize="end" android:singleLine="true" android:text="高等数学" android:textColor="#FF1F1F1F" android:textSize="13sp" android:textStyle="bold" />
+                    <TextView android:id="@+id/widget_info_3" android:layout_width="match_parent" android:layout_height="wrap_content" android:ellipsize="end" android:singleLine="true" android:text="第1-2节｜4教204｜张老师" android:textColor="#FF7A7A7A" android:textSize="10sp" />
+                </LinearLayout>
+            </LinearLayout>
+        </FrameLayout>
+        <FrameLayout android:id="@+id/widget_row_4" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="4dp">
+            <ImageView android:id="@+id/widget_cell_4" android:layout_width="match_parent" android:layout_height="match_parent" android:scaleType="fitXY" />
+            <LinearLayout android:layout_width="match_parent" android:layout_height="match_parent" android:gravity="center_vertical" android:orientation="horizontal" android:paddingLeft="6dp" android:paddingTop="3dp" android:paddingRight="6dp" android:paddingBottom="3dp" android:id="@+id/widget_rowin_4">
+                <!-- 左边：上课时间（上一行起始、下一行结束，两行） -->
+                <TextView android:id="@+id/widget_time_4" android:layout_width="wrap_content" android:layout_height="wrap_content" android:minWidth="34dp" android:maxLines="2" android:text="8:00\n8:40" android:textColor="#FF5F6368" android:textSize="11sp" />
+                <!-- 蓝色竖线：左边时间、右边课程，就靠它分开 -->
+                <TextView android:id="@+id/widget_line_4" android:maxLines="1" android:layout_width="2dp" android:layout_height="match_parent" android:minHeight="28dp" android:layout_marginLeft="8dp" android:layout_marginRight="8dp" android:background="#FF4A6CF7" />
+                <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:orientation="vertical">
+                    <TextView android:id="@+id/widget_text_4" android:layout_width="match_parent" android:layout_height="wrap_content" android:ellipsize="end" android:singleLine="true" android:text="高等数学" android:textColor="#FF1F1F1F" android:textSize="13sp" android:textStyle="bold" />
+                    <TextView android:id="@+id/widget_info_4" android:layout_width="match_parent" android:layout_height="wrap_content" android:ellipsize="end" android:singleLine="true" android:text="第1-2节｜4教204｜张老师" android:textColor="#FF7A7A7A" android:textSize="10sp" />
+                </LinearLayout>
+            </LinearLayout>
+        </FrameLayout>
+        <FrameLayout android:id="@+id/widget_row_5" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="4dp">
+            <ImageView android:id="@+id/widget_cell_5" android:layout_width="match_parent" android:layout_height="match_parent" android:scaleType="fitXY" />
+            <LinearLayout android:layout_width="match_parent" android:layout_height="match_parent" android:gravity="center_vertical" android:orientation="horizontal" android:paddingLeft="6dp" android:paddingTop="3dp" android:paddingRight="6dp" android:paddingBottom="3dp" android:id="@+id/widget_rowin_5">
+                <!-- 左边：上课时间（上一行起始、下一行结束，两行） -->
+                <TextView android:id="@+id/widget_time_5" android:layout_width="wrap_content" android:layout_height="wrap_content" android:minWidth="34dp" android:maxLines="2" android:text="8:00\n8:40" android:textColor="#FF5F6368" android:textSize="11sp" />
+                <!-- 蓝色竖线：左边时间、右边课程，就靠它分开 -->
+                <TextView android:id="@+id/widget_line_5" android:maxLines="1" android:layout_width="2dp" android:layout_height="match_parent" android:minHeight="28dp" android:layout_marginLeft="8dp" android:layout_marginRight="8dp" android:background="#FF4A6CF7" />
+                <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:orientation="vertical">
+                    <TextView android:id="@+id/widget_text_5" android:layout_width="match_parent" android:layout_height="wrap_content" android:ellipsize="end" android:singleLine="true" android:text="高等数学" android:textColor="#FF1F1F1F" android:textSize="13sp" android:textStyle="bold" />
+                    <TextView android:id="@+id/widget_info_5" android:layout_width="match_parent" android:layout_height="wrap_content" android:ellipsize="end" android:singleLine="true" android:text="第1-2节｜4教204｜张老师" android:textColor="#FF7A7A7A" android:textSize="10sp" />
+                </LinearLayout>
+            </LinearLayout>
+        </FrameLayout>
+        <FrameLayout android:id="@+id/widget_row_6" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="4dp">
+            <ImageView android:id="@+id/widget_cell_6" android:layout_width="match_parent" android:layout_height="match_parent" android:scaleType="fitXY" />
+            <LinearLayout android:layout_width="match_parent" android:layout_height="match_parent" android:gravity="center_vertical" android:orientation="horizontal" android:paddingLeft="6dp" android:paddingTop="3dp" android:paddingRight="6dp" android:paddingBottom="3dp" android:id="@+id/widget_rowin_6">
+                <!-- 左边：上课时间（上一行起始、下一行结束，两行） -->
+                <TextView android:id="@+id/widget_time_6" android:layout_width="wrap_content" android:layout_height="wrap_content" android:minWidth="34dp" android:maxLines="2" android:text="8:00\n8:40" android:textColor="#FF5F6368" android:textSize="11sp" />
+                <!-- 蓝色竖线：左边时间、右边课程，就靠它分开 -->
+                <TextView android:id="@+id/widget_line_6" android:maxLines="1" android:layout_width="2dp" android:layout_height="match_parent" android:minHeight="28dp" android:layout_marginLeft="8dp" android:layout_marginRight="8dp" android:background="#FF4A6CF7" />
+                <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:orientation="vertical">
+                    <TextView android:id="@+id/widget_text_6" android:layout_width="match_parent" android:layout_height="wrap_content" android:ellipsize="end" android:singleLine="true" android:text="高等数学" android:textColor="#FF1F1F1F" android:textSize="13sp" android:textStyle="bold" />
+                    <TextView android:id="@+id/widget_info_6" android:layout_width="match_parent" android:layout_height="wrap_content" android:ellipsize="end" android:singleLine="true" android:text="第1-2节｜4教204｜张老师" android:textColor="#FF7A7A7A" android:textSize="10sp" />
+                </LinearLayout>
+            </LinearLayout>
+        </FrameLayout>
+        <!-- 撑满剩余高度：让卡片永远占满格子 -->
+        <TextView android:layout_width="match_parent" android:layout_height="0dp" android:layout_weight="1" />
+        <TextView android:id="@+id/widget_footer" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="4dp" android:text="点一下打开课表" android:textColor="#80000000" android:textSize="10sp" />
+    </LinearLayout>
+</FrameLayout>
