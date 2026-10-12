@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  小组件的“注册信息”：告诉系统这个组件多大、多久自动刷新一次、初始长什么样。
+  · updatePeriodMillis 最小只能到 30 分钟（1800000），系统不允许更频繁
+  · 真正需要“数据一变立刻刷新”的场景，由 App 内部主动调 refreshScheduleWidgets()
+-->
+<appwidget-provider xmlns:android="http://schemas.android.com/apk/res/android"
+    android:initialLayout="@layout/widget_schedule"
+    android:minWidth="250dp"
+    android:minHeight="110dp"
+    android:targetCellWidth="4"
+    android:targetCellHeight="2"
+    android:resizeMode="horizontal|vertical"
+    android:updatePeriodMillis="1800000"
+    android:widgetCategory="home_screen" />
